@@ -1,4 +1,7 @@
-import { createContext, useContext, useEffect, useState, useMemo } from "react";
+import {
+  createContext, useContext, useEffect,
+  useState, useMemo, useCallback
+} from "react";
 
 // Create shared todo context
 const TodoContext = createContext(null);
@@ -19,8 +22,8 @@ export function TodoProvider({ children }) {
     localStorage.setItem("todos", JSON.stringify(todos));
   }, [todos]);
 
-  // Add new todo
-  function addTodo(text) {
+  // Stable add function
+  const addTodo = useCallback((text) => {
     if (!text.trim()) return;
 
     const newTodo = {
@@ -30,25 +33,24 @@ export function TodoProvider({ children }) {
     };
 
     setTodos(prev => [...prev, newTodo]);
-    console.log("Added todo:", newTodo);
-  }
+  }, []);
 
   // Toggle completion
-  function toggleTodo(id) {
+  const toggleTodo = useCallback((id) => {
     setTodos(prev => prev.map(todo =>
       todo.id === id
         ? { ...todo, completed: !todo.completed }
         : todo
     ));
-  }
+  }, []);
 
   // Delete todo
-  function deleteTodo(id) {
+  const deleteTodo = useCallback((id) => {
     setTodos(prev => prev.filter(todo => todo.id !== id));
-  }
+  }, []);
 
   // Edit todo text
-  function editTodo(id, newText) {
+  const editTodo = useCallback((id, newText) => {
     if (!newText.trim()) return;
 
     setTodos(prev => prev.map(todo =>
@@ -56,18 +58,29 @@ export function TodoProvider({ children }) {
         ? { ...todo, text: newText.trim() }
         : todo
     ));
-  }
+  }, []);
 
   // Remove completed todos
-  function clearCompleted() {
+  const clearCompleted = useCallback(() => {
     setTodos(prev => prev.filter(todo => !todo.completed));
-  }
+  }, []);
 
-  // Share state and actions
+  // Memoize shared context values
   const value = useMemo(() => ({
-    todos, addTodo, toggleTodo, deleteTodo,
-    editTodo, clearCompleted
-  }), [todos]);
+    todos,
+    addTodo,
+    toggleTodo,
+    deleteTodo,
+    editTodo,
+    clearCompleted
+  }), [
+    todos,
+    addTodo,
+    toggleTodo,
+    deleteTodo,
+    editTodo,
+    clearCompleted
+  ]);
 
   return (
     <TodoContext.Provider value={value}>
