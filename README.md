@@ -1,16 +1,58 @@
-# React + Vite
+# Lab 10.3 — FocusFlow Todo App
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A responsive React Todo application using the Context API.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+1. Add, edit, delete, and complete todos.
+2. Filter by All, Active, and Completed.
+3. Switch between light and dark themes.
+4. Save todos and theme with localStorage.
 
-## React Compiler
+## Technologies
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React (JavaScript/JSX)
+- Vite
+- Context API
+- CSS
+- localStorage
 
-## Expanding the Oxlint configuration
+## Getting Started
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+`npm install`
+`npm run dev`
+
+## Build
+
+`npm run build`
+
+## Contexts
+
+- TodoContext: Manages todo actions and persistence.
+- FilterContext: Controls visible tasks.
+- ThemeContext: Manages light and dark mode.
+
+## Reflection
+
+**Why use Context API?**
+
+Context allows components to share state without passing props through every component.
+
+**How is state updated?**
+
+React updater functions create new arrays and objects without directly changing existing state.
+
+**How is data saved?**
+
+useEffect saves changes to localStorage, and useState restores saved data when the app loads.
+
+**How is performance considered?**
+
+useMemo and useCallback help stabilize context values and functions.
+
+## Resources
+
+- [React Documentation](https://react.dev/)
+- [Vite Documentation](https://vite.dev/)
+- [Google Search](https://www.google.com/)
+```
