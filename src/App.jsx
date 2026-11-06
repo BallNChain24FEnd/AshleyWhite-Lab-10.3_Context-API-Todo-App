@@ -1,5 +1,6 @@
 import TodoInput from "./components/TodoInput";
 import TodoList from "./components/TodoList";
+import FilterButtons from "./components/FilterButtons";
 import "./App.css";
 
 export default function App() {
@@ -12,6 +13,7 @@ export default function App() {
         <p>Small steps, big progress.</p>
 
         <TodoInput />
+        <FilterButtons />
         <TodoList />
       </section>
     </main>

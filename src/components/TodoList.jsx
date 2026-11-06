@@ -1,9 +1,18 @@
 import { useTodos } from "../contexts/TodoContext";
+import { useFilter } from "../contexts/FilterContext";
 import TodoItem from "./TodoItem";
 
 export default function TodoList() {
-  // Read todos and clear action
+  // Read both contexts
   const { todos, clearCompleted } = useTodos();
+  const { filter } = useFilter();
+
+  // Show matching todos
+  const visibleTodos = todos.filter(todo => {
+    if (filter === "active") return !todo.completed;
+    if (filter === "completed") return todo.completed;
+    return true;
+  });
 
   const completed = todos.filter(todo => todo.completed).length;
 
@@ -13,10 +22,10 @@ export default function TodoList() {
         {completed} of {todos.length} tasks completed
       </p>
 
-      {todos.length === 0 ? (
-        <p className="empty">No todos yet! Add one above.</p>
+      {visibleTodos.length === 0 ? (
+        <p className="empty">No matching todos.</p>
       ) : (
-        todos.map(todo => (
+        visibleTodos.map(todo => (
           <TodoItem key={todo.id} todo={todo} />
         ))
       )}
